@@ -1,0 +1,1378 @@
+{
+	"info": {
+		"_postman_id": "b1f25c43-0529-4f44-9e38-483e42c6a74a",
+		"name": "gorest.co.in",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16111176"
+	},
+	"item": [
+		{
+			"name": "Get all users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"User is authorized\", function () {",
+							"pm.response.to.not.have.status(401);",
+							"});",
+							"",
+							"",
+							"pm.test(\"The response is array\", () => {",
+							"  const responseBody = pm.response.json();",
+							"  pm.expect(responseBody).to.be.an(\"array\");",
+							"  pm.expect(responseBody.length).to.not.eql(0);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer c965e3111ba28906d3cf6d2c2d88cb99a7e4e61e571c515e2ce18155569edec6",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://gorest.co.in/public/v2/users",
+					"protocol": "https",
+					"host": [
+						"gorest",
+						"co",
+						"in"
+					],
+					"path": [
+						"public",
+						"v2",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get user by ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response is okay to process\", function () {",
+							"    pm.response.to.not.be.error;",
+							"    pm.response.to.not.have.jsonBody(\"error\");",
+							"});",
+							"",
+							"pm.test(\"The response is not null\", () => {",
+							"  const responseBody = pm.response.json();",
+							"  pm.expect(responseBody[0].id).to.not.be.null;",
+							"  pm.expect(responseBody[0].id).to.eql(parseInt(pm.variables.get(\"USER_ID\")));",
+							"  pm.expect(responseBody[0].user_id).to.not.be.null;",
+							"  pm.expect(responseBody[0].title).to.not.be.null;",
+							"  pm.expect(responseBody[0].body).to.not.be.null;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer c965e3111ba28906d3cf6d2c2d88cb99a7e4e61e571c515e2ce18155569edec6",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://gorest.co.in/public/v2/users/?id={{USER_ID}}",
+					"protocol": "https",
+					"host": [
+						"gorest",
+						"co",
+						"in"
+					],
+					"path": [
+						"public",
+						"v2",
+						"users",
+						""
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{USER_ID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get male users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response is okay to process\", function () {",
+							"    pm.response.to.not.be.error;",
+							"    pm.response.to.not.have.jsonBody(\"error\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"All the users are male\", () => {",
+							"  const responseBody = pm.response.json();",
+							"  pm.expect(responseBody[0].gender).to.eql(pm.variables.get(\"GENDER\"));",
+							"});",
+							"",
+							"",
+							"",
+							"pm.test(\"The response is array\", () => {",
+							"  const responseBody = pm.response.json();",
+							"  pm.expect(responseBody).to.be.an(\"array\");",
+							"  pm.expect(responseBody.length).to.not.eql(0);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer c965e3111ba28906d3cf6d2c2d88cb99a7e4e61e571c515e2ce18155569edec6",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://gorest.co.in/public/v2/users/?gender={{GENDER}}",
+					"protocol": "https",
+					"host": [
+						"gorest",
+						"co",
+						"in"
+					],
+					"path": [
+						"public",
+						"v2",
+						"users",
+						""
+					],
+					"query": [
+						{
+							"key": "gender",
+							"value": "{{GENDER}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get male Ian Kulas before it was created",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response should be okay to process\", function () {",
+							"    pm.response.to.not.be.error;",
+							"    pm.response.to.not.have.jsonBody(\"error\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"The user wasn't found\", () => {",
+							"  const responseBody = pm.response.json();",
+							"  pm.expect(responseBody).to.be.empty;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer c965e3111ba28906d3cf6d2c2d88cb99a7e4e61e571c515e2ce18155569edec6",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://gorest.co.in/public/v2/users/?gender=male&name=Ian Kulas",
+					"protocol": "https",
+					"host": [
+						"gorest",
+						"co",
+						"in"
+					],
+					"path": [
+						"public",
+						"v2",
+						"users",
+						""
+					],
+					"query": [
+						{
+							"key": "gender",
+							"value": "male"
+						},
+						{
+							"key": "name",
+							"value": "Ian Kulas"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create male Ian Kulas user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"IK_USER_ID\", pm.response.json().id);",
+							"",
+							"pm.test(\"Status test\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"",
+							"",
+							"pm.test(\"Test data type of the response\", () => {",
+							"    const responseBody = pm.response.json();",
+							"  pm.expect(responseBody.id).to.be.a(\"number\");",
+							"  pm.expect(responseBody.name).to.be.a(\"string\");",
+							"  pm.expect(responseBody.email).to.be.a(\"string\");",
+							"  pm.expect(responseBody.gender).to.be.a(\"string\");",
+							"  pm.expect(responseBody.status).to.be.a(\"string\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"The response is not null\", () => {",
+							"    const responseBody = pm.response.json();",
+							"  pm.expect(responseBody.id).to.not.be.null;",
+							"  pm.expect(responseBody.name).to.not.be.null;",
+							"  pm.expect(responseBody.email).to.not.be.null;",
+							"  pm.expect(responseBody.gender).to.not.be.null;",
+							"  pm.expect(responseBody.status).to.not.be.null;",
+							"});",
+							"",
+							"",
+							"",
+							"",
+							"pm.test(\"Gender field can't be blank, can be male or female\", () => {",
+							"    const responseBody = pm.response.json();",
+							"  pm.expect(responseBody.gender).to.not.be.null;",
+							"  pm.expect(responseBody.gender).to.oneOf([\"male\",\"female\"]);",
+							"}); //negative"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer c965e3111ba28906d3cf6d2c2d88cb99a7e4e61e571c515e2ce18155569edec6",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://gorest.co.in/public/v2/users?email={{IK_EMAIL}}&name=Ian Kulas&gender=male&status=active",
+					"protocol": "https",
+					"host": [
+						"gorest",
+						"co",
+						"in"
+					],
+					"path": [
+						"public",
+						"v2",
+						"users"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "{{IK_EMAIL}}"
+						},
+						{
+							"key": "name",
+							"value": "Ian Kulas"
+						},
+						{
+							"key": "gender",
+							"value": "male"
+						},
+						{
+							"key": "status",
+							"value": "active"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get male Ian Kulas",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response should be okay to process\", function () {",
+							"    pm.response.to.not.be.error;",
+							"    pm.response.to.not.have.jsonBody(\"error\");",
+							"});",
+							"",
+							"pm.test(\"The person male Ian Kulas was found\", () => {",
+							"  const responseBody = pm.response.json();",
+							"  pm.expect(responseBody[0].name).to.eql(\"Ian Kulas\");",
+							"  pm.expect(responseBody[0].gender).to.eql(\"male\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer c965e3111ba28906d3cf6d2c2d88cb99a7e4e61e571c515e2ce18155569edec6",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://gorest.co.in/public/v2/users/?gender=male&name=Ian Kulas",
+					"protocol": "https",
+					"host": [
+						"gorest",
+						"co",
+						"in"
+					],
+					"path": [
+						"public",
+						"v2",
+						"users",
+						""
+					],
+					"query": [
+						{
+							"key": "gender",
+							"value": "male"
+						},
+						{
+							"key": "name",
+							"value": "Ian Kulas"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a new user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"NEW_USER_ID\", pm.response.json().id);",
+							"",
+							"pm.test(\"Status test\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"",
+							"",
+							"pm.test(\"Test data type of the response\", () => {",
+							"    const responseBody = pm.response.json();",
+							"  pm.expect(responseBody.id).to.be.a(\"number\");",
+							"  pm.expect(responseBody.name).to.be.a(\"string\");",
+							"  pm.expect(responseBody.email).to.be.a(\"string\");",
+							"  pm.expect(responseBody.gender).to.be.a(\"string\");",
+							"  pm.expect(responseBody.status).to.be.a(\"string\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"The response is not null\", () => {",
+							"    const responseBody = pm.response.json();",
+							"  pm.expect(responseBody.id).to.not.be.null;",
+							"  pm.expect(responseBody.name).to.not.be.null;",
+							"  pm.expect(responseBody.email).to.not.be.null;",
+							"  pm.expect(responseBody.gender).to.not.be.null;",
+							"  pm.expect(responseBody.status).to.not.be.null;",
+							"});",
+							"",
+							"",
+							"",
+							"",
+							"pm.test(\"Gender field can't be blank, can be male or female\", () => {",
+							"    const responseBody = pm.response.json();",
+							"  pm.expect(responseBody.gender).to.not.be.null;",
+							"  pm.expect(responseBody.gender).to.oneOf([\"male\",\"female\"]);",
+							"}); "
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer c965e3111ba28906d3cf6d2c2d88cb99a7e4e61e571c515e2ce18155569edec6",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://gorest.co.in/public/v2/users?email={{NEW_USER_EMAIL}}&name={{NEW_USER_NAME}}&gender={{NEW_USER_GENDER}}&status=active",
+					"protocol": "https",
+					"host": [
+						"gorest",
+						"co",
+						"in"
+					],
+					"path": [
+						"public",
+						"v2",
+						"users"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "{{NEW_USER_EMAIL}}"
+						},
+						{
+							"key": "name",
+							"value": "{{NEW_USER_NAME}}"
+						},
+						{
+							"key": "gender",
+							"value": "{{NEW_USER_GENDER}}"
+						},
+						{
+							"key": "status",
+							"value": "active"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a new user with taken email",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"The email has already been taken\", () => {",
+							"     const responseBody = pm.response.json();",
+							"  pm.expect(responseBody[0].message).to.eql(\"has already been taken\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer c965e3111ba28906d3cf6d2c2d88cb99a7e4e61e571c515e2ce18155569edec6",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://gorest.co.in/public/v2/users?email={{IK_EMAIL}}&name={{NEW_USER_NAME}}&gender={{NEW_USER_GENDER}}&status=active",
+					"protocol": "https",
+					"host": [
+						"gorest",
+						"co",
+						"in"
+					],
+					"path": [
+						"public",
+						"v2",
+						"users"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "{{IK_EMAIL}}"
+						},
+						{
+							"key": "name",
+							"value": "{{NEW_USER_NAME}}"
+						},
+						{
+							"key": "gender",
+							"value": "{{NEW_USER_GENDER}}"
+						},
+						{
+							"key": "status",
+							"value": "active"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all the posts",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response should be okay to process\", function () {",
+							"    pm.response.to.not.be.error;",
+							"    pm.response.to.not.have.jsonBody(\"error\");",
+							"});",
+							"",
+							"",
+							"",
+							"pm.test(\"Test data type of the response\", () => {",
+							"  const responseBody = pm.response.json();",
+							"  pm.expect(responseBody[0].id).to.be.a(\"number\");",
+							"  pm.expect(responseBody[0].user_id).to.be.a(\"number\");",
+							"  pm.expect(responseBody[0].title).to.be.a(\"string\");",
+							"  pm.expect(responseBody[0].body).to.be.a(\"string\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"The response is not null\", () => {",
+							"  const responseBody = pm.response.json();",
+							"  pm.expect(responseBody[0].id).to.not.be.null;",
+							"  pm.expect(responseBody[0].user_id).to.not.be.null;",
+							"  pm.expect(responseBody[0].title).to.not.be.null;",
+							"  pm.expect(responseBody[0].body).to.not.be.null;",
+							"});",
+							"",
+							"pm.test(\"The response is array\", () => {",
+							"  const responseBody = pm.response.json();",
+							"  pm.expect(responseBody).to.be.an(\"array\");",
+							"  pm.expect(responseBody.length).to.not.eql(0);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer c965e3111ba28906d3cf6d2c2d88cb99a7e4e61e571c515e2ce18155569edec6",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://gorest.co.in/public/v2/posts",
+					"protocol": "https",
+					"host": [
+						"gorest",
+						"co",
+						"in"
+					],
+					"path": [
+						"public",
+						"v2",
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get the posts of the user that doesn't have any posts",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"pm.test(\"The user doesn't have any posts\", () => {",
+							"  const responseBody = pm.response.json();",
+							"  pm.expect(responseBody).to.be.empty;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer c965e3111ba28906d3cf6d2c2d88cb99a7e4e61e571c515e2ce18155569edec6",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://gorest.co.in/public/v2/users/{{NEW_USER_ID}}/posts",
+					"protocol": "https",
+					"host": [
+						"gorest",
+						"co",
+						"in"
+					],
+					"path": [
+						"public",
+						"v2",
+						"users",
+						"{{NEW_USER_ID}}",
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a new user post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"NEW_POST_ID\", pm.response.json().id);",
+							"",
+							"pm.test(\"Status test\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"",
+							"",
+							"pm.test(\"Test data type of the response\", () => {",
+							"  const responseBody = pm.response.json();",
+							"  pm.expect(responseBody.id).to.be.a(\"number\");",
+							"  pm.expect(responseBody.user_id).to.be.a(\"number\");",
+							"  pm.expect(responseBody.title).to.be.a(\"string\");",
+							"  pm.expect(responseBody.body).to.be.a(\"string\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"The response is not null\", () => {",
+							"  const responseBody = pm.response.json();",
+							"  pm.expect(responseBody.id).to.not.be.null;",
+							"  pm.expect(responseBody.user_id).to.not.be.null;",
+							"  pm.expect(responseBody.title).to.not.be.null;",
+							"  pm.expect(responseBody.body).to.not.be.null;",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer c965e3111ba28906d3cf6d2c2d88cb99a7e4e61e571c515e2ce18155569edec6",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://gorest.co.in/public/v2/users/{{NEW_USER_ID}}/posts?title=test post title&body=test post body",
+					"protocol": "https",
+					"host": [
+						"gorest",
+						"co",
+						"in"
+					],
+					"path": [
+						"public",
+						"v2",
+						"users",
+						"{{NEW_USER_ID}}",
+						"posts"
+					],
+					"query": [
+						{
+							"key": "title",
+							"value": "test post title"
+						},
+						{
+							"key": "body",
+							"value": "test post body"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get the user's posts",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response should be okay to process\", function () {",
+							"    pm.response.to.not.be.error;",
+							"    pm.response.to.not.have.jsonBody(\"error\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Test data type of the response\", () => {",
+							"  const responseBody = pm.response.json();",
+							"  pm.expect(responseBody[0].id).to.be.a(\"number\");",
+							"  pm.expect(responseBody[0].user_id).to.be.a(\"number\");",
+							"  pm.expect(responseBody[0].title).to.be.a(\"string\");",
+							"  pm.expect(responseBody[0].body).to.be.a(\"string\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"The user (user id: \" + pm.variables.get(\"NEW_USER_ID\") + \") has  posts\", () => {",
+							"  const responseBody = pm.response.json();",
+							"  pm.expect(responseBody[0].id).to.not.be.null;",
+							"  pm.expect(responseBody[0].user_id).to.not.be.null;",
+							"  pm.expect(responseBody[0].title).to.not.be.null;",
+							"  pm.expect(responseBody[0].body).to.not.be.null;",
+							"  pm.expect(responseBody[0].user_id).to.eql(parseInt(pm.variables.get(\"NEW_USER_ID\"))); ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer c965e3111ba28906d3cf6d2c2d88cb99a7e4e61e571c515e2ce18155569edec6",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://gorest.co.in/public/v2/users/{{NEW_USER_ID}}/posts",
+					"protocol": "https",
+					"host": [
+						"gorest",
+						"co",
+						"in"
+					],
+					"path": [
+						"public",
+						"v2",
+						"users",
+						"{{NEW_USER_ID}}",
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a new post from the user that doesn't exist",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"pm.test(\"User doesn't exist\", () => {",
+							"  const responseBody = pm.response.json();",
+							"  pm.expect(responseBody[0].field).to.eql(\"user\");  ",
+							"  pm.expect(responseBody[0].message).to.eql(\"must exist\"); ",
+							"}); // negative",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer c965e3111ba28906d3cf6d2c2d88cb99a7e4e61e571c515e2ce18155569edec6",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://gorest.co.in/public/v2/users/{{USER_ID_DOESNT_EXIST}}/posts?title=test post title&body=test post body",
+					"protocol": "https",
+					"host": [
+						"gorest",
+						"co",
+						"in"
+					],
+					"path": [
+						"public",
+						"v2",
+						"users",
+						"{{USER_ID_DOESNT_EXIST}}",
+						"posts"
+					],
+					"query": [
+						{
+							"key": "title",
+							"value": "test post title"
+						},
+						{
+							"key": "body",
+							"value": "test post body"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update created post",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Test data type of the response\", () => {",
+							"  const responseBody = pm.response.json();",
+							"  pm.expect(responseBody.id).to.be.a(\"number\");",
+							"  pm.expect(responseBody.user_id).to.be.a(\"number\");",
+							"  pm.expect(responseBody.title).to.be.a(\"string\");",
+							"  pm.expect(responseBody.body).to.be.a(\"string\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"The response is not null\", () => {",
+							"  const responseBody = pm.response.json();",
+							"  pm.expect(responseBody.id).to.not.be.null;",
+							"  pm.expect(responseBody.user_id).to.not.be.null;",
+							"  pm.expect(responseBody.title).to.not.be.null;",
+							"  pm.expect(responseBody.body).to.not.be.null;",
+							"  });"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer c965e3111ba28906d3cf6d2c2d88cb99a7e4e61e571c515e2ce18155569edec6",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://gorest.co.in/public/v2/posts/{{NEW_POST_ID}}?title=UPDATED POST TITLE&body=UPDATED POST BODY",
+					"protocol": "https",
+					"host": [
+						"gorest",
+						"co",
+						"in"
+					],
+					"path": [
+						"public",
+						"v2",
+						"posts",
+						"{{NEW_POST_ID}}"
+					],
+					"query": [
+						{
+							"key": "title",
+							"value": "UPDATED POST TITLE"
+						},
+						{
+							"key": "body",
+							"value": "UPDATED POST BODY"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update user info",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Test data type of the response\", () => {",
+							"    const responseBody = pm.response.json();",
+							"  pm.expect(responseBody.id).to.be.a(\"number\");",
+							"  pm.expect(responseBody.name).to.be.a(\"string\");",
+							"  pm.expect(responseBody.email).to.be.a(\"string\");",
+							"  pm.expect(responseBody.gender).to.be.a(\"string\");",
+							"  pm.expect(responseBody.status).to.be.a(\"string\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Gender field can't be blank, can be male or female\", () => {",
+							"    const responseBody = pm.response.json();",
+							"  pm.expect(responseBody.gender).to.not.be.null;",
+							"  pm.expect(responseBody.gender).to.oneOf([\"male\",\"female\"]);",
+							"}); //negative",
+							"",
+							"",
+							"",
+							"pm.test(\"Email is correct\", () => {",
+							"    const emailPattern = /^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$/gm;",
+							"    const responseBody = pm.response.json();",
+							"  pm.expect(responseBody.email).to.not.be.null;",
+							"  pm.expect(responseBody.email).to.match(emailPattern)",
+							"}); ",
+							"",
+							"",
+							"pm.test(\"Name was updated\", () => {",
+							"    const responseBody = pm.response.json();",
+							"  pm.expect(responseBody.name).to.not.eql(pm.variables.get(\"NEW_USER_NAME\"));",
+							"  pm.response.to.have.status(200)",
+							"});",
+							"",
+							"",
+							"",
+							"",
+							"  pm.test(\"Email was updated\", () => {",
+							"    const responseBody = pm.response.json();",
+							"  pm.expect(responseBody.email).to.not.eql(pm.variables.get(\"NEW_USER_EMAIL\"));",
+							"  pm.response.to.have.status(200)",
+							"});",
+							"",
+							"pm.collectionVariables.set(\"NEW_USER_NAME\", pm.response.json().name);",
+							"pm.collectionVariables.set(\"NEW_USER_GENDER\", pm.response.json().gender);",
+							"pm.collectionVariables.set(\"NEW_USER_EMAIL\", pm.response.json().email);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer c965e3111ba28906d3cf6d2c2d88cb99a7e4e61e571c515e2ce18155569edec6",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://gorest.co.in/public/v2/users/{{NEW_USER_ID}}/?name=Nastassi&gender=female&email=annastaemail123@gmail.com",
+					"protocol": "https",
+					"host": [
+						"gorest",
+						"co",
+						"in"
+					],
+					"path": [
+						"public",
+						"v2",
+						"users",
+						"{{NEW_USER_ID}}",
+						""
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Nastassi"
+						},
+						{
+							"key": "gender",
+							"value": "female"
+						},
+						{
+							"key": "email",
+							"value": "annastaemail123@gmail.com"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete the post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Post was deleted\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer c965e3111ba28906d3cf6d2c2d88cb99a7e4e61e571c515e2ce18155569edec6",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://gorest.co.in/public/v2/posts/{{NEW_POST_ID}}",
+					"protocol": "https",
+					"host": [
+						"gorest",
+						"co",
+						"in"
+					],
+					"path": [
+						"public",
+						"v2",
+						"posts",
+						"{{NEW_POST_ID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete the post that doesn't exist",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Post doesn't exist\", () => {",
+							"  const responseBody = pm.response.json();",
+							"  pm.response.to.have.status(404);",
+							"  pm.expect(responseBody.message).to.eql(\"Resource not found\"); ",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer c965e3111ba28906d3cf6d2c2d88cb99a7e4e61e571c515e2ce18155569edec6",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://gorest.co.in/public/v2/posts/{{NEW_POST_ID}}",
+					"protocol": "https",
+					"host": [
+						"gorest",
+						"co",
+						"in"
+					],
+					"path": [
+						"public",
+						"v2",
+						"posts",
+						"{{NEW_POST_ID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete the user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"User was deleted\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer c965e3111ba28906d3cf6d2c2d88cb99a7e4e61e571c515e2ce18155569edec6",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://gorest.co.in/public/v2/users/{{NEW_USER_ID}}",
+					"protocol": "https",
+					"host": [
+						"gorest",
+						"co",
+						"in"
+					],
+					"path": [
+						"public",
+						"v2",
+						"users",
+						"{{NEW_USER_ID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Ian Kulas user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"User was deleted\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer c965e3111ba28906d3cf6d2c2d88cb99a7e4e61e571c515e2ce18155569edec6",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://gorest.co.in/public/v2/users/{{IK_USER_ID}}",
+					"protocol": "https",
+					"host": [
+						"gorest",
+						"co",
+						"in"
+					],
+					"path": [
+						"public",
+						"v2",
+						"users",
+						"{{IK_USER_ID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete the user that doesn't exist",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"User was not deleted cause doesn't exist\", function () {",
+							"    const responseBody = pm.response.json();",
+							"    pm.response.to.have.status(404);",
+							"    pm.expect(responseBody.message).to.eql(\"Resource not found\"); ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer c965e3111ba28906d3cf6d2c2d88cb99a7e4e61e571c515e2ce18155569edec6",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://gorest.co.in/public/v2/users/{{USER_ID_DOESNT_EXIST}}",
+					"protocol": "https",
+					"host": [
+						"gorest",
+						"co",
+						"in"
+					],
+					"path": [
+						"public",
+						"v2",
+						"users",
+						"{{USER_ID_DOESNT_EXIST}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"pm.collectionVariables.set(\"NEW_USER_NAME\", '{{$randomFullName}}');",
+					"pm.collectionVariables.set(\"NEW_USER_EMAIL\", '{{$randomEmail}}');",
+					"",
+					"function randomGender (){",
+					"    return pm.variables.replaceIn(\"{{randomBoolean}}\") === \"true\"? \"male\": \"female\";",
+					"}",
+					"",
+					"pm.collectionVariables.set(\"GENDER\", randomGender())",
+					"pm.collectionVariables.set(\"NEW_USER_GENDER\", randomGender())",
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "GENDER",
+			"value": "male"
+		},
+		{
+			"key": "USER_NAME",
+			"value": "Ian Kulas"
+		},
+		{
+			"key": "USER_ID",
+			"value": "3211",
+			"type": "string"
+		},
+		{
+			"key": "NEW_USER_NAME",
+			"value": "NASTA K23"
+		},
+		{
+			"key": "NEW_USER_EMAIL",
+			"value": "annastanew23@gmail.com"
+		},
+		{
+			"key": "NEW_USER_GENDER",
+			"value": "male"
+		},
+		{
+			"key": "NEW_USER_ID",
+			"value": 3993
+		},
+		{
+			"key": "POST_ID",
+			"value": "1839"
+		},
+		{
+			"key": "NEW_POST_ID",
+			"value": "2016",
+			"type": "string"
+		},
+		{
+			"key": "USER_ID_DOESNT_EXIST",
+			"value": "4534543543543534543"
+		},
+		{
+			"key": "IK_EMAIL",
+			"value": "IanKulas@gmail.com"
+		},
+		{
+			"key": "IK_USER_ID",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
